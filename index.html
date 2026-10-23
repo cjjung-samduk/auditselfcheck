@@ -1,0 +1,285 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>삼덕 외부감사 셀프진단</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&display=swap">
+<style>
+/* Layout: 한 장짜리 진단지. 상단 밴드 → 대상 선택 탭 → 입력(왼쪽)·판정(오른쪽) → 상담·뉴스레터 신청(MS Forms 버튼). 좁은 화면에서는 한 줄로 쌓임 */
+:root{
+  --bg:#f4f7f6; --paper:#ffffff; --ink:#15302e; --muted:#5b6f6c; --line:#d5e1df;
+  --teal:#006666; --teal-soft:#e3f0ef; --on-teal:#ffffff;
+  --ok:#1f7a4d; --ok-soft:#e2f3e9; --warn:#a15c00; --warn-soft:#fbefdc; --no:#5b6f6c; --no-soft:#eef2f1;
+  --f-display:"Noto Serif KR","Nanum Myeongjo",serif;
+  --f-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1918; --paper:#162321; --ink:#e3eeec; --muted:#9db1ae; --line:#2b3d3a;
+  --teal:#3fa9a3; --teal-soft:#1c3533; --on-teal:#06201e;
+  --ok:#5fcf93; --ok-soft:#173528; --warn:#f0b35c; --warn-soft:#3a2b14; --no:#9db1ae; --no-soft:#1d2a28; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1918; --paper:#162321; --ink:#e3eeec; --muted:#9db1ae; --line:#2b3d3a;
+  --teal:#3fa9a3; --teal-soft:#1c3533; --on-teal:#06201e;
+  --ok:#5fcf93; --ok-soft:#173528; --warn:#f0b35c; --warn-soft:#3a2b14; --no:#9db1ae; --no-soft:#1d2a28; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.band{background:var(--teal);color:var(--on-teal)}
+header.band .wrap{padding-block:22px 26px;display:flex;flex-direction:column;gap:6px}
+.brand{font-size:13px;letter-spacing:.08em;opacity:.9}
+h1{font-family:var(--f-display);font-size:clamp(22px,4.2vw,30px);line-height:1.3;margin:0;text-wrap:balance}
+.lead{margin:0;max-width:62ch;opacity:.95}
+main .wrap{padding-block:24px 40px;display:flex;flex-direction:column;gap:22px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{font:inherit;font-weight:700;border:1.5px solid var(--teal);background:var(--paper);color:var(--teal);padding:10px 16px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--teal);color:var(--on-teal)}
+.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+h2{font-family:var(--f-display);font-size:19px;margin:0}
+.hint{color:var(--muted);font-size:13px;margin:0}
+.field{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:10px;align-items:center}
+.field label{font-weight:500}
+.field small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+.num{display:flex;align-items:center;border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+.num input{width:100%;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:9px 6px 9px 10px}
+.num span{padding-right:10px;color:var(--muted);font-size:13px;white-space:nowrap}
+select,.txt,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 10px;width:100%;min-width:0}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg label{display:flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:7px 12px;cursor:pointer;background:var(--bg)}
+.seg input{accent-color:var(--teal)}
+table.crit{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.crit th,table.crit td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+table.crit th{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.04em}
+table.crit td.mark{text-align:center;width:72px}
+.chip{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.no{background:var(--no-soft);color:var(--no)}
+.chip.na{background:transparent;color:var(--muted);font-weight:400}
+.verdict{border-radius:8px;padding:14px 16px;border-left:5px solid var(--no);background:var(--no-soft)}
+.verdict.ok{border-color:var(--ok);background:var(--ok-soft)}
+.verdict.warn{border-color:var(--warn);background:var(--warn-soft)}
+.verdict strong{display:block;font-size:17px;margin-bottom:4px}
+.verdict p{margin:0;font-size:14px}
+.steps{margin:0;padding-left:20px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+@media (max-width:560px){.contact-grid{grid-template-columns:minmax(0,1fr)}}
+.contact-grid .full{grid-column:1/-1}
+.contact-grid label{font-size:13px;font-weight:500;display:flex;flex-direction:column;gap:4px}
+.contact-grid .note{font-size:12px;font-weight:400;color:var(--muted);line-height:1.5}
+.contact-grid .agree{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:400;color:var(--ink)}
+.contact-grid .agree input{accent-color:var(--teal);width:16px;height:16px;margin:0}
+textarea{min-height:120px;resize:vertical;font-size:14px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;border-radius:6px;padding:10px 16px;cursor:pointer;border:1.5px solid var(--teal);background:var(--teal);color:var(--on-teal);text-decoration:none;display:inline-flex;align-items:center}
+.btn.ghost{background:transparent;color:var(--teal)}
+.direct{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;font-size:15px}
+.direct dt{color:var(--muted)}
+.direct dd{margin:0;font-weight:700;user-select:all;overflow-wrap:anywhere}
+.toast{font-size:13px;color:var(--ok);min-height:1.2em;margin:0}
+footer .wrap{padding-block:0 32px;color:var(--muted);font-size:12px;display:flex;flex-direction:column;gap:4px}
+footer p{margin:0;max-width:80ch}
+@media (prefers-reduced-motion:no-preference){.verdict{transition:background .2s,border-color .2s}}
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <div class="brand">NEXIA SAMDUK · 삼덕회계법인 감사본부</div>
+    <h1>2027년 외부감사 대상 셀프진단</h1>
+    <p class="lead">2026년 결산 예상 숫자 몇 개만 넣으면, 2027년에 외부감사(공익법인은 세무확인 포함) 대상이 되는지 바로 확인할 수 있습니다. 입력하신 숫자는 이 페이지에 저장되지 않습니다(상담 신청서를 제출하실 때만 진단 결과가 함께 전달됩니다).</p>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <div class="tabs" role="tablist" aria-label="진단 대상">
+    <button class="tab" role="tab" id="tab-co" aria-controls="pane-co" aria-selected="true">주식회사·유한회사</button>
+    <button class="tab" role="tab" id="tab-npo" aria-controls="pane-npo" aria-selected="false">공익법인 (재단·사단·의료·사회복지법인 등)</button>
+  </div>
+
+  <!-- 일반 회사 -->
+  <section id="pane-co" role="tabpanel" aria-labelledby="tab-co" class="grid">
+    <div class="panel">
+      <h2>2026년 결산 예상치 입력</h2>
+      <p class="hint">12월 결산 회사 기준입니다. 정확한 숫자가 아니어도 됩니다. 대략의 예상치를 넣고 ‘결과 확인’을 눌러 주세요.</p>
+      <div class="field"><label>회사 형태</label>
+        <div class="seg">
+          <label><input type="radio" name="form" id="form-jusik" value="jusik" checked> 주식회사</label>
+          <label><input type="radio" name="form" id="form-yuhan" value="yuhan"> 유한회사</label>
+        </div>
+      </div>
+      <div class="field"><label for="c-asset">자산총액<small>2026년 말 기준</small></label><div class="num"><input id="c-asset" inputmode="decimal" placeholder="0"><span>억 원</span></div></div>
+      <div class="field"><label for="c-debt">부채총액<small>2026년 말 기준</small></label><div class="num"><input id="c-debt" inputmode="decimal" placeholder="0"><span>억 원</span></div></div>
+      <div class="field"><label for="c-sales">매출액<small>2026년 연간</small></label><div class="num"><input id="c-sales" inputmode="decimal" placeholder="0"><span>억 원</span></div></div>
+      <div class="field"><label for="c-emp">종업원 수<small>근로기준법상 근로자</small></label><div class="num"><input id="c-emp" inputmode="numeric" placeholder="0"><span>명</span></div></div>
+      <div class="field" id="row-member" hidden><label for="c-member">사원 수<small>정관에 기재된 사원</small></label><div class="num"><input id="c-member" inputmode="numeric" placeholder="0"><span>명</span></div></div>
+      <div class="actions"><button class="btn" type="button" id="c-run">결과 확인</button><button class="btn ghost" type="button" id="c-clear">지우기</button></div>
+    </div>
+    <div class="panel" aria-live="polite">
+      <h2>판정 결과</h2>
+      <table class="crit">
+        <thead><tr><th>요건 (2026년 결산 기준)</th><th style="text-align:center">해당</th></tr></thead>
+        <tbody id="c-rows"></tbody>
+      </table>
+      <div class="verdict" id="c-verdict"><strong>숫자를 넣고 ‘결과 확인’을 눌러 주세요</strong><p id="c-rule"></p></div>
+      <ol class="steps" id="c-steps" hidden>
+        <li><b>2027년 4월 30일까지</b> 감사인 선임 (12월 결산 회사)</li>
+        <li>감사계약 후 <b>2주 이내</b> 증권선물위원회에 선임 사실 보고</li>
+        <li>기한을 놓치면 증권선물위원회가 감사인을 지정할 수 있습니다</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 공익법인 -->
+  <section id="pane-npo" role="tabpanel" aria-labelledby="tab-npo" class="grid" hidden>
+    <div class="panel">
+      <h2>2026년 결산 예상치 입력</h2>
+      <p class="hint">상속세 및 증여세법상 공익법인 기준입니다. 12월 결산 기준으로 대략의 예상치를 넣고 ‘결과 확인’을 눌러 주세요.</p>
+      <div class="field"><label for="n-asset">총자산<small>2026년 말 재무상태표 기준</small></label><div class="num"><input id="n-asset" inputmode="decimal" placeholder="0"><span>억 원</span></div></div>
+      <div class="field"><label for="n-income">수입금액<small>2026년 연간 (사업·기부 수입 등)</small></label><div class="num"><input id="n-income" inputmode="decimal" placeholder="0"><span>억 원</span></div></div>
+      <div class="field"><label for="n-contrib">출연받은 재산<small>2026년 연간</small></label><div class="num"><input id="n-contrib" inputmode="decimal" placeholder="0"><span>억 원</span></div></div>
+      <div class="field"><label>종교단체 여부</label>
+        <div class="seg"><label><input type="checkbox" id="n-religion"> 종교의 보급·교화 목적 법인</label></div>
+      </div>
+      <div class="actions"><button class="btn" type="button" id="n-run">결과 확인</button><button class="btn ghost" type="button" id="n-clear">지우기</button></div>
+    </div>
+    <div class="panel" aria-live="polite">
+      <h2>판정 결과</h2>
+      <table class="crit">
+        <thead><tr><th>요건</th><th style="text-align:center">해당</th></tr></thead>
+        <tbody id="n-rows"></tbody>
+      </table>
+      <div class="verdict" id="n-verdict-audit"><strong>외부회계감사</strong><p>숫자를 넣고 ‘결과 확인’을 눌러 주세요.</p></div>
+      <div class="verdict" id="n-verdict-tax"><strong>외부전문가 세무확인</strong><p>숫자를 넣고 ‘결과 확인’을 눌러 주세요.</p></div>
+      <ol class="steps" id="n-steps" hidden>
+        <li>사업연도 종료 후 <b>4개월 이내(2027년 4월 30일)</b> 감사보고서·세무확인서를 관할 세무서에 제출</li>
+        <li>같은 기한까지 결산서류를 <b>홈택스에 공시</b> (미이행 시 자산총액의 0.5% 가산세)</li>
+        <li>세무확인은 출연자·출연 기업과 감사·세무대리 관계가 없는 외부전문가만 할 수 있습니다</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 상담·뉴스레터 신청 (Microsoft Forms) -->
+  <section class="panel" aria-labelledby="h-contact">
+    <h2 id="h-contact">상담·뉴스레터 신청</h2>
+    <p class="hint">버튼을 누르면 신청서가 새 창으로 열립니다. 위 진단 결과가 신청서에 자동으로 들어갑니다. 외부감사 상담을 신청하시거나, 상담 없이 삼덕회계법인의 Weekly CFO Newsletter만 받아보실 수도 있습니다.</p>
+    <div class="actions">
+      <a class="btn" id="m-form" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=a2Vqh867j0qMLRSa4t-K3p-Cw3kwXBJPpLPwTNTc69xUM1NBVkIzVENaMkQwMjg1VjFWUDAxWlRHRS4u" target="_blank" rel="noopener">상담·뉴스레터 신청하기</a>
+    </div>
+    <p class="hint">* 신청서에서 이메일을 입력하고 수신에 동의하시면 매주 삼덕회계법인의 Weekly CFO Newsletter를 받아보실 수 있습니다.</p>
+    <dl class="direct">
+      <dt>전화·문자</dt><dd>010-8850-0217</dd>
+      <dt>이메일</dt><dd>cjjung01@nexiasamduk.kr</dd>
+    </dl>
+    <p class="hint">전화나 메일로 바로 문의하셔도 됩니다.</p>
+  </section>
+</div>
+</main>
+
+<footer><div class="wrap">
+  <p>※ 이 진단은 「주식회사 등의 외부감사에 관한 법률」 시행령 제5조, 「상속세 및 증여세법」 제50조·시행령 제43조의 기준을 단순화한 참고용입니다. 실제 해당 여부는 확정 결산과 세부 요건(신설·청산 회사 제외, 상장 예정, 1,000억 원 이상 공익법인 감사인 지정 등)에 따라 달라질 수 있습니다.</p>
+  <p>삼덕회계법인 · Nexia International 회원법인</p>
+</div></footer>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  let shown={co:false,npo:false};
+  const val=id=>{if(!shown[id[0]==='c'?'co':'npo'])return null;const v=parseFloat(String($(id).value).replace(/,/g,''));return isFinite(v)?v:null};
+  let mode='co', lastSummary='';
+
+  /* ---------- 탭 ---------- */
+  function setTab(m){
+    mode=m;
+    $('tab-co').setAttribute('aria-selected',m==='co');
+    $('tab-npo').setAttribute('aria-selected',m==='npo');
+    $('pane-co').hidden=m!=='co'; $('pane-npo').hidden=m!=='npo';
+    m==='co'?calcCo():calcNpo();
+  }
+  $('tab-co').onclick=()=>setTab('co'); $('tab-npo').onclick=()=>setTab('npo');
+
+  const chip=s=>s===null?'<span class="chip na">입력 전</span>':(s?'<span class="chip ok">해당</span>':'<span class="chip no">미해당</span>');
+  const ge=(v,t)=>v===null?null:v>=t;
+
+  /* ---------- 일반 회사 (외감법 시행령 5조) ---------- */
+  function calcCo(){
+    const yuhan=$('form-yuhan').checked;
+    $('row-member').hidden=!yuhan;
+    const a=val('c-asset'),d=val('c-debt'),s=val('c-sales'),e=val('c-emp'),m=val('c-member');
+    const items=[['자산총액 120억 원 이상',ge(a,120)],['부채총액 70억 원 이상',ge(d,70)],['매출액 100억 원 이상',ge(s,100)],['종업원 100명 이상',ge(e,100)]];
+    if(yuhan) items.push(['사원 50명 이상',ge(m,50)]);
+    const big=[['자산총액 500억 원 이상',ge(a,500)],['매출액 500억 원 이상',ge(s,500)]];
+    $('c-rows').innerHTML=items.concat(big).map(([l,v],i)=>`<tr><td>${i>=items.length?'<b>단독 요건</b> · ':''}${l}</td><td class="mark">${chip(v)}</td></tr>`).join('');
+    const need=yuhan?3:2, cnt=items.filter(x=>x[1]).length, any=[a,d,s,e].some(x=>x!==null);
+    const bigHit=big.some(x=>x[1]);
+    $('c-rule').textContent=`${yuhan?'유한회사는 위 5개 중 3개':'주식회사는 위 4개 중 2개'} 이상에 해당하거나, 자산총액 또는 매출액이 500억 원 이상이면 외부감사 대상입니다.`;
+    const v=$('c-verdict'); v.className='verdict';
+    let head='숫자를 넣고 ‘결과 확인’을 눌러 주세요';
+    if(any){
+      if(bigHit||cnt>=need){v.classList.add('ok');head='2027년 외부감사 대상으로 보입니다';}
+      else if(cnt===need-1){v.classList.add('warn');head=`요건 ${cnt}개 해당 · 1개만 더 해당되면 대상입니다`;}
+      else head=`현재 요건 ${cnt}개 해당 · 2027년 대상은 아닌 것으로 보입니다`;
+    }
+    v.querySelector('strong').textContent=head;
+    $('c-steps').hidden=!(any&&(bigHit||cnt>=need-1));
+    lastSummary=any?`[셀프진단] ${yuhan?'유한회사':'주식회사'} · ${head}\n(입력: 자산 ${a??'-'}억, 부채 ${d??'-'}억, 매출 ${s??'-'}억, 종업원 ${e??'-'}명${yuhan?`, 사원 ${m??'-'}명`:''})`:'';
+    buildMsg();
+  }
+
+  /* ---------- 공익법인 (상증법 50조, 시행령 43조) ---------- */
+  function calcNpo(){
+    const a=val('n-asset'),inc=val('n-income'),c=val('n-contrib'),rel=$('n-religion').checked;
+    const ic=(inc===null&&c===null)?null:(inc||0)+(c||0);
+    const rows=[
+      ['외부회계감사','총자산 100억 원 이상',ge(a,100)],
+      ['','수입금액 + 출연재산 50억 원 이상',ge(ic,50)],
+      ['','출연재산 20억 원 이상',ge(c,20)],
+      ['세무확인','총자산 5억 원 이상',ge(a,5)],
+      ['','수입금액 + 출연재산 3억 원 이상',ge(ic,3)]];
+    $('n-rows').innerHTML=rows.map(([g,l,v])=>`<tr><td>${g?`<b>${g}</b> · `:''}${l}</td><td class="mark">${chip(v)}</td></tr>`).join('');
+    const any=[a,inc,c].some(x=>x!==null);
+    const audit=rows.slice(0,3).some(r=>r[2]), tax=rows.slice(3).some(r=>r[2]);
+    const near=!audit&&((a!==null&&a>=70)||(ic!==null&&ic>=35)||(c!==null&&c>=14));
+    const va=$('n-verdict-audit'), vt=$('n-verdict-tax');
+    va.className='verdict'; vt.className='verdict';
+    let ha='숫자를 넣고 ‘결과 확인’을 눌러 주세요.', ht=ha;
+    if(any){
+      if(rel){ha='종교단체는 외부회계감사 대상에서 제외됩니다.';}
+      else if(audit){va.classList.add('ok');ha='대상으로 보입니다. 2027년 4월 30일까지 감사보고서 제출이 필요합니다.';}
+      else if(near){va.classList.add('warn');ha='아직 기준 미만이지만 가까워지고 있습니다. 결산 전에 확인해 두시기를 권합니다.';}
+      else ha='현재 숫자로는 대상이 아닌 것으로 보입니다.';
+      if(tax){vt.classList.add('ok');ht='대상으로 보입니다. 외부전문가의 세무확인서를 제출해야 합니다.';}
+      else ht='현재 숫자로는 대상이 아닌 것으로 보입니다.';
+    }
+    va.querySelector('p').textContent=ha; vt.querySelector('p').textContent=ht;
+    $('n-steps').hidden=!(any&&(audit||tax||near));
+    lastSummary=any?`[셀프진단] 공익법인 · 외부회계감사: ${rel?'종교단체 제외':audit?'대상':near?'근접':'미해당'} / 세무확인: ${tax?'대상':'미해당'}\n(입력: 총자산 ${a??'-'}억, 수입 ${inc??'-'}억, 출연 ${c??'-'}억)`:'';
+    buildMsg();
+  }
+
+  /* ---------- 상담·뉴스레터 신청서 (Microsoft Forms, 진단 결과 자동 입력) ---------- */
+  const FORM_URL='https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=a2Vqh867j0qMLRSa4t-K3p-Cw3kwXBJPpLPwTNTc69xUM1NBVkIzVENaMkQwMjg1VjFWUDAxWlRHRS4u';
+  const FORM_RESULT_KEY='r403d1567906d45a3b1ef14cc7144e281';
+  function buildMsg(){
+    const s=lastSummary.replace(/\n/g,' ').trim();
+    $('m-form').href=FORM_URL+(s?'&'+FORM_RESULT_KEY+'='+encodeURIComponent(s):'');
+  }
+
+  /* ---------- 입력 연결 ---------- */
+  ['c-asset','c-debt','c-sales','c-emp','c-member','form-jusik','form-yuhan'].forEach(id=>$(id).addEventListener('input',calcCo));
+  ['form-jusik','form-yuhan'].forEach(id=>$(id).addEventListener('change',calcCo));
+  ['n-asset','n-income','n-contrib','n-religion'].forEach(id=>$(id).addEventListener('input',calcNpo));
+  $('n-religion').addEventListener('change',calcNpo);
+  const fill=(o)=>Object.entries(o).forEach(([k,v])=>$(k).value=v);
+  $('c-run').onclick=()=>{shown.co=true;calcCo();$('c-verdict').scrollIntoView({behavior:'smooth',block:'center'});};
+  $('c-clear').onclick=()=>{fill({'c-asset':'','c-debt':'','c-sales':'','c-emp':'','c-member':''});shown.co=false;calcCo();};
+  $('n-run').onclick=()=>{shown.npo=true;calcNpo();$('n-verdict-audit').scrollIntoView({behavior:'smooth',block:'center'});};
+  $('n-clear').onclick=()=>{fill({'n-asset':'','n-income':'','n-contrib':''});$('n-religion').checked=false;shown.npo=false;calcNpo();};
+
+  /* 레터 QR: #l1 → 회사, #l2 → 공익법인 */
+  const h=(location.hash||'').toLowerCase();
+  calcNpo(); setTab(h==='#l2'||h==='#npo'?'npo':'co');
+})();
+</script>
+
+</body></html>
