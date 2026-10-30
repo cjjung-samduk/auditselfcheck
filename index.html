@@ -278,9 +278,14 @@ footer p{margin:0;max-width:80ch}
   /* ---------- 상담·뉴스레터 신청서 (Microsoft Forms, 진단 결과 자동 입력) ---------- */
   const FORM_URL='https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=a2Vqh867j0qMLRSa4t-K3p-Cw3kwXBJPpLPwTNTc69xUM1NBVkIzVENaMkQwMjg1VjFWUDAxWlRHRS4u';
   const FORM_RESULT_KEY='r403d1567906d45a3b1ef14cc7144e281';
+  /* 10/30: 유입 경로 표시 — 레터 QR(#l1 일반, #l2 공익) / 사이트 직접 */
+  const srcTag=()=>{const h=(location.hash||'').toLowerCase();const site=/auditselfcheck\.kr$/.test(location.hostname);
+    if(h==='#l2')return site?'공익 레터 QR':'공익 레터 QR(11월, 옛 주소)';
+    if(h==='#l1')return site?'일반 레터 QR':'일반 레터 QR(옛 주소)';
+    return site?'사이트 직접':'옛 주소 직접';};
   function buildMsg(){
     const s=lastSummary.replace(/\n/g,' ').trim();
-    $('m-form').href=FORM_URL+(s?'&'+FORM_RESULT_KEY+'='+encodeURIComponent(s):'');
+    $('m-form').href=FORM_URL+'&'+FORM_RESULT_KEY+'='+encodeURIComponent('[경로: '+srcTag()+'] '+(s||'(진단 안 함)'));
   }
 
   /* ---------- 입력 연결 ---------- */
